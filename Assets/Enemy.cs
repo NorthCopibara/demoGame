@@ -1,18 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Enemy : MonoBehaviour
+[CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy")]
+public class Enemy : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float _forceMovement;
+    public float _forceUp;
+    public int _health;
 }
