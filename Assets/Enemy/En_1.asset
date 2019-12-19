@@ -16,4 +16,5 @@ MonoBehaviour:
   _forceUp: 300
   _health: 1
   _damade: 0.1
-  _skin: {fileID: 0}
+  _skin: {fileID: 2100000, guid: 9542b707d6c841d4b908d360cd47b598, type: 2}
+  _scale: 1

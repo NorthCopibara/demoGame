@@ -4,12 +4,17 @@
 public class EnemyController : MonoBehaviour
 {
     #region Enemy Stats
-    public Enemy _enemy;
+    public Enemy[] _enemy;
 
-    private float _forceUp;
-    private float _forceMovement;
-    private int _hialth;
+    private int      _lvl;
+    private float    _forceUp;
+    private float    _forceMovement;
+    private int      _hialth;
+    private float    _scale;
+    private Material _skin;
     #endregion
+
+    public int _myLvl { get; private set;}
 
     Rigidbody _rbEnemy;
     Vector3 _targetMovement = new Vector3(0, 0, 0); //Заменить на конткретные координаты
@@ -20,14 +25,26 @@ public class EnemyController : MonoBehaviour
     {
         _rbEnemy = GetComponent<Rigidbody>();
 
-    #region Enemy init
-    _forceUp = _enemy._forceUp;
-    _forceMovement = _enemy._forceMovement;
-    _hialth = _enemy._health;
-    #endregion
+         _myLvl = Random.Range(0, _enemy.Length); //Генерация уровня противника
+        //_myLvl = 1;
+        EnemySetup(_myLvl);
     }
 
-private void Update() //Разваричиваемся по направлению таргета
+    private void EnemySetup(int myLvl)
+    {
+        #region Enemy init
+        _forceUp         = _enemy[myLvl]._forceUp;
+        _forceMovement   = _enemy[myLvl]._forceMovement;
+        _hialth          = _enemy[myLvl]._health;
+        _skin            = _enemy[myLvl]._skin;
+        _scale           = _enemy[myLvl]._scale;
+        #endregion
+
+        GetComponent<MeshRenderer>().material = _skin;
+        transform.localScale = new Vector3(_scale, _scale, _scale);
+    }
+
+    private void Update() //Разваричиваемся по направлению таргета
     {
         Vector3 difference = _targetMovement - transform.position;
         difference.Normalize();

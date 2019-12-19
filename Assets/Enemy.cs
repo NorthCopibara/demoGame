@@ -9,4 +9,6 @@ public class Enemy : ScriptableObject
 
     public float _damade;
     public Material _skin;
+
+    public float _scale;
 }

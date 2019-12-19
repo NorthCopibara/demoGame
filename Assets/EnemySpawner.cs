@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Объекты противников")]
-    [SerializeField] private GameObject[] _enemy_obj;
+    [SerializeField] private GameObject _enemy_obj;
 
     [Space(5)]
     [Header("Трансформ родителя")]
@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (!_stop_spawn)
         {
-            _sapwn_position = new Vector3(Random.Range(-40.0f, 40.0f), Random.Range(5.0f, 25.0f), 35.0f);
+            _sapwn_position = new Vector3(Random.Range(-40.0f, 40.0f), Random.Range(5.0f, 25.0f), 40.0f);
             StartCoroutine(Spawner());
             _stop_spawn = true;
         }
@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator Spawner()
     {
         yield return new WaitForSeconds(_dTimeSpawn);
-        Instantiate(_enemy_obj[Random.Range(0, _enemy_obj.Length)], _sapwn_position, Quaternion.identity, _enemy_parant);
+        Instantiate(_enemy_obj, _sapwn_position, Quaternion.identity, _enemy_parant);
         _stop_spawn = false;
     }
 }
