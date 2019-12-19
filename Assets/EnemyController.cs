@@ -14,6 +14,8 @@ public class EnemyController : MonoBehaviour
     private Material _skin;
     #endregion
 
+    private bool _stoper;
+
     public int _myLvl { get; private set;}
 
     Rigidbody _rbEnemy;
@@ -25,9 +27,14 @@ public class EnemyController : MonoBehaviour
     {
         _rbEnemy = GetComponent<Rigidbody>();
 
-         _myLvl = Random.Range(0, _enemy.Length); //Генерация уровня противника
-        //_myLvl = 1;
+         //_myLvl = Random.Range(0, _enemy.Length); //Генерация уровня противника
+        _myLvl = 0;
         EnemySetup(_myLvl);
+    }
+
+    public void StopDefCollision(bool stop)
+    {
+        _stoper = stop;
     }
 
     private void EnemySetup(int myLvl)
@@ -67,6 +74,18 @@ public class EnemyController : MonoBehaviour
         {
             _partical.Play();
             _rbEnemy.AddForce(Vector3.up * _forceUp * Time.deltaTime, ForceMode.Force);
+        }
+        if (collision.transform.tag == "Enemy")
+        {
+            if (!_stoper && _myLvl < _enemy.Length)
+            {
+                collision.gameObject.GetComponent<EnemyController>().StopDefCollision(true);
+                _myLvl++;
+                EnemySetup(_myLvl);
+            }
+            else
+                if(collision.gameObject.GetComponent<EnemyController>()._myLvl != _enemy.Length)
+                    Destroy(this.gameObject);
         }
     }
 }

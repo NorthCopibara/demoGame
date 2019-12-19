@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58888b50f166c10418d95b4ba9c6e8ba, type: 3}
   m_Name: En_1
   m_EditorClassIdentifier: 
-  _forceMovement: 5
+  _forceMovement: 1
   _forceUp: 300
   _health: 1
   _damade: 0.1

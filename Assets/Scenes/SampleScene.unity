@@ -567,7 +567,7 @@ MonoBehaviour:
   _enemy_obj: {fileID: 2068961840474959242, guid: 2f30cc09717e37a4ea0c936ea56733d1,
     type: 3}
   _enemy_parant: {fileID: 1172359743}
-  _dTimeSpawn: 0.2
+  _dTimeSpawn: 0.5
 --- !u!1 &1544290746
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,8 +594,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544290746}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -2.46, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: -0.06, z: 0}
+  m_LocalScale: {x: 5, y: 0.2, z: 5}
   m_Children: []
   m_Father: {fileID: 1888774625}
   m_RootOrder: 2
