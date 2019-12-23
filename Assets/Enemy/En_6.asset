@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58888b50f166c10418d95b4ba9c6e8ba, type: 3}
-  m_Name: En_1
+  m_Name: En_6
   m_EditorClassIdentifier: 
-  _forceMovement: 9
-  _forceUp: 300
-  _health: 1
-  _damade: 0.1
-  _skin: {fileID: 2100000, guid: 953347c69586cce418abc768d422fc22, type: 2}
-  _scale: 0.5
+  _forceMovement: 4
+  _forceUp: 200
+  _health: 6
+  _damade: 0.6
+  _skin: {fileID: 2100000, guid: 568b1b75cd823c343a4dfb2e8d999817, type: 2}
+  _scale: 1
