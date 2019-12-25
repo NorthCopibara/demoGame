@@ -26,10 +26,58 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         _rbEnemy = GetComponent<Rigidbody>();
+        EnemySetup(EnemyLvl());
+    }
 
-         //_myLvl = Random.Range(0, _enemy.Length); //Генерация уровня противника
-        _myLvl = 0;
-        EnemySetup(_myLvl);
+    private int EnemyLvl()
+    {
+        int _rand = Random.Range(0, 100000);
+
+        if (_rand < 20000)
+        {
+            _myLvl = 0;
+        }
+        else
+        if(_rand < 38000)
+        {
+            _myLvl = 1;
+        }
+        else
+        if (_rand < 54000)
+        {
+            _myLvl = 2;
+        }
+        else
+        if (_rand < 68000)
+        {
+            _myLvl = 3;
+        }
+        else
+        if (_rand < 80000)
+        {
+            _myLvl = 4;
+        }
+        else
+        if (_rand < 88000)
+        {
+            _myLvl = 5;
+        }
+        else
+        if (_rand < 94000)
+        {
+            _myLvl = 6;
+        }
+        else
+        if (_rand < 96000)
+        {
+            _myLvl = 7;
+        }
+        else
+        if (_rand <= 100000)
+        {
+            _myLvl = 8;
+        }
+        return _myLvl;
     }
 
     public void StopDefCollision(bool stop)
@@ -77,14 +125,16 @@ public class EnemyController : MonoBehaviour
         }
         if (collision.transform.tag == "Enemy")
         {
-            if (!_stoper && _myLvl < _enemy.Length)
+            EnemyController _noI = collision.gameObject.GetComponent<EnemyController>();
+
+            if (!_stoper && _myLvl < _enemy.Length - 1 && _myLvl > _noI._myLvl)
             {
-                collision.gameObject.GetComponent<EnemyController>().StopDefCollision(true);
+                _noI.StopDefCollision(true);
                 _myLvl++;
                 EnemySetup(_myLvl);
             }
             else
-                if(collision.gameObject.GetComponent<EnemyController>()._myLvl != _enemy.Length)
+                if(_noI._myLvl != _enemy.Length - 1 && _myLvl < _noI._myLvl)
                     Destroy(this.gameObject);
         }
     }

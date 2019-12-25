@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58888b50f166c10418d95b4ba9c6e8ba, type: 3}
   m_Name: En_2
   m_EditorClassIdentifier: 
-  _forceMovement: 3
-  _forceUp: 200
+  _forceMovement: 8
+  _forceUp: 280
   _health: 2
   _damade: 0.2
-  _skin: {fileID: 2100000, guid: 568b1b75cd823c343a4dfb2e8d999817, type: 2}
-  _scale: 1.5
+  _skin: {fileID: 2100000, guid: 8f513c29e4f74844da6527566cadc62a, type: 2}
+  _scale: 0.6
