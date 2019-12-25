@@ -4,7 +4,7 @@
 public class EnemyController : MonoBehaviour
 {
     #region Enemy Stats
-    public Enemy[] _enemy;
+    public Enemy[]   _enemy;
 
     private int      _lvl;
     private float    _forceUp;
@@ -16,10 +16,10 @@ public class EnemyController : MonoBehaviour
 
     private bool _stoper;
 
-    public int _myLvl { get; private set;}
+    public int _myLvl { get; private set; }
 
-    Rigidbody _rbEnemy;
-    Vector3 _targetMovement = new Vector3(0, 0, 0); //Заменить на конткретные координаты
+    private Rigidbody _rbEnemy;
+    private Vector3 _targetMovement = new Vector3(0, 0, 0); //Заменить на конткретные координаты
 
     [SerializeField] private ParticleSystem _partical;
 
