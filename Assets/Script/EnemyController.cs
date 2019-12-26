@@ -114,6 +114,8 @@ public class EnemyController : MonoBehaviour
         _hialth --;
         if (_hialth <= 0)
             Destroy(gameObject);
+        else
+            EnemySetup(_hialth - 1);
     }
 
     private void OnCollisionEnter(Collision collision) //Подпрыгивание

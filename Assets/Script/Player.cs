@@ -9,28 +9,33 @@ public class Player : MonoBehaviour
 
     private void Update() //Ловим рейкасты
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Physics.Raycast(ray, out hit))
-            {
-                var Coliders = Physics.OverlapSphere(hit.point, range);
 
-                foreach (var x in Coliders)
+        foreach (var r in Input.touches)
+        {
+            if (r.phase == TouchPhase.Began)
+            {
+                ray = Camera.main.ScreenPointToRay(r.position);
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (x.tag == "Enemy")
+                    var Coliders = Physics.OverlapSphere(hit.point, range);
+
+                    foreach (var x in Coliders)
                     {
-                        x.transform.GetComponent<EnemyController>().Damage();
-                        break;
+                        if (x.tag == "Enemy")
+                        {
+                            x.transform.GetComponent<EnemyController>().Damage();
+                            break;
+                        }
                     }
                 }
             }
         }
     }
+    
 
-    private void OnDrawGizmos() //Для видимости в инспекторе
+    /*private void OnDrawGizmos() //Для видимости в инспекторе
     {
         if (Input.GetMouseButton(0))
             Gizmos.DrawSphere(hit.point, range);
-    }
+    }*/
 }
