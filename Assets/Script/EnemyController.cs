@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamage
 {
     #region Enemy Stats
     public Enemy[]   _enemy;
 
-    private int      _lvl;
     private float    _forceUp;
     private float    _forceMovement;
     private int      _hialth;
@@ -14,7 +13,7 @@ public class EnemyController : MonoBehaviour
     private Material _skin;
     #endregion
 
-    private bool _stoper;
+    private bool _stoper; //Кастыль слияния противников (блрчит удаление второго противника при соприкосновении)
 
     public int _myLvl { get; private set; }
 
@@ -26,66 +25,9 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         _rbEnemy = GetComponent<Rigidbody>();
-        EnemySetup(EnemyLvl());
     }
 
-    private int EnemyLvl()
-    {
-        int _rand = Random.Range(0, 100000);
-
-        if (_rand < 20000)
-        {
-            _myLvl = 0;
-        }
-        else
-        if(_rand < 38000)
-        {
-            _myLvl = 1;
-        }
-        else
-        if (_rand < 54000)
-        {
-            _myLvl = 2;
-        }
-        else
-        if (_rand < 68000)
-        {
-            _myLvl = 3;
-        }
-        else
-        if (_rand < 80000)
-        {
-            _myLvl = 4;
-        }
-        else
-        if (_rand < 88000)
-        {
-            _myLvl = 5;
-        }
-        else
-        if (_rand < 94000)
-        {
-            _myLvl = 6;
-        }
-        else
-        if (_rand < 96000)
-        {
-            _myLvl = 7;
-        }
-        else
-        if (_rand <= 100000)
-        {
-            _myLvl = 8;
-        }
-        return _myLvl;
-    }
-
-    public void StopDefCollision(bool stop)
-    {
-        _stoper = stop;
-    }
-
-    private void EnemySetup(int myLvl)
+    public void EnemySetup(int myLvl)
     {
         #region Enemy init
         _forceUp         = _enemy[myLvl]._forceUp;
@@ -94,7 +36,7 @@ public class EnemyController : MonoBehaviour
         _skin            = _enemy[myLvl]._skin;
         _scale           = _enemy[myLvl]._scale;
         #endregion
-
+        _myLvl = myLvl;
         GetComponent<MeshRenderer>().material = _skin;
         transform.localScale = new Vector3(_scale, _scale, _scale);
     }
@@ -109,27 +51,32 @@ public class EnemyController : MonoBehaviour
         _rbEnemy.transform.Translate(Vector3.forward * _forceMovement * Time.deltaTime);
     }
 
-    public void Damage() //Урон с тача
+    public void Damage(int damage) //Урон с тача
     {
-        _hialth --;
+        _hialth -= damage;
         if (_hialth <= 0)
             Destroy(gameObject);
         else
             EnemySetup(_hialth - 1);
+    }
+    
+    public void StopDefCollision(bool stop)
+    {
+        _stoper = stop;
     }
 
     private void OnCollisionEnter(Collision collision) //Подпрыгивание
     {
         if (collision.transform.tag == "Plane")
         {
-            _partical.Play();
+            //_partical.Play();
             _rbEnemy.AddForce(Vector3.up * _forceUp * Time.deltaTime, ForceMode.Force);
         }
         if (collision.transform.tag == "Enemy")
         {
             EnemyController _noI = collision.gameObject.GetComponent<EnemyController>();
 
-            if (!_stoper && _myLvl < _enemy.Length - 1 && _myLvl > _noI._myLvl)
+            if (_myLvl < _enemy.Length - 1 && _myLvl > _noI._myLvl)
             {
                 _noI.StopDefCollision(true);
                 _myLvl++;

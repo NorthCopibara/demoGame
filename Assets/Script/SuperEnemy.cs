@@ -14,7 +14,7 @@ public class SuperEnemy : MonoBehaviour
     {
         if (collision.transform.tag == "Plane") //Прыгаем на плейне
         {
-            _partical.Play();
+            //_partical.Play();
             _rbSuperEnemy.AddForce(Vector3.up * _forceUp * Time.deltaTime, ForceMode.Force);
         }
 
