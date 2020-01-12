@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IAttack
 
     private float _range; //Радиус поражения
     private int _damage;
-    private bool _aoe;
+    private int _countAttack;
 
     SetGame _setGame;
 
@@ -15,14 +15,14 @@ public class Player : MonoBehaviour, IAttack
     {
         _setGame = SetGame.Instance;
 
-        SetAttack(_setGame._setRange, _setGame._setDamage, _setGame._aoe);
+        SetAttack(_setGame._setRange, _setGame._setDamage, _setGame._countAttack);
     }
 
-    public void SetAttack(float range, int damage, bool aoe) 
+    public void SetAttack(float range, int damage, int countAttack) 
     {
-        _aoe = aoe;
         _range = range;
         _damage = damage;
+        _countAttack = countAttack;
     }
 
     private void Update() //Ловим рейкасты
@@ -56,25 +56,28 @@ public class Player : MonoBehaviour, IAttack
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                var Coliders = Physics.OverlapSphere(hit.point, _range);
-
-                foreach (Collider x in Coliders)
-                {
-                    if (x.tag == "Enemy")
-                    {
-                        Attack(x, _damage);
-
-                        if(!_aoe) //Если массовый урон отключен
-                            break;
-                    }
-                }
+                Attack(hit.point, _damage, _countAttack, _range);
             }
         }
         #endregion
     }
 
-    public void Attack(Collider character, int damage) 
+    public void Attack(Vector3 point, int damage, int countAttack, float range) 
     {
-        character.transform.GetComponent<IDamage>().Damage(damage);
+        var Coliders = Physics.OverlapSphere(point, range);
+        int i = 0;
+
+        foreach (Collider x in Coliders)
+        {
+            if (x.tag == "Enemy")
+            {
+                x.transform.GetComponent<IDamage>().Damage(damage);
+
+                i++; //Счетчик количества энеми под атакай за 1 каст
+                if(i >= countAttack)
+                    break;
+            }
+        }
+        
     }
 }

@@ -2,7 +2,7 @@
 
 public interface IAttack 
 {
-    void Attack(Collider character, int damage);
+    void Attack(Vector3 point, int damage, int countAttack, float range);
 }
 
 public interface IDamage
