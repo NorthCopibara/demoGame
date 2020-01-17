@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 
 public class EnemyController : MonoBehaviour, IDamage
@@ -22,9 +23,27 @@ public class EnemyController : MonoBehaviour, IDamage
 
     [SerializeField] private ParticleSystem _partical;
 
+    #region
+    private int _state = 0;
+    private bool _storRotate;
+    private bool _soper;
+
+    private SpellManager _spell;
+    #endregion
+
+
+
     private void Start()
     {
         _rbEnemy = GetComponent<Rigidbody>();
+
+        _spell = FindObjectOfType<SpellManager>();
+        _spell._spellCust += SetState;
+    }
+
+    private void SetState(int state) 
+    {
+        _state = state;
     }
 
     public void EnemySetup(int myLvl)
@@ -43,13 +62,72 @@ public class EnemyController : MonoBehaviour, IDamage
 
     private void Update() //Разваричиваемся по направлению таргета
     {
+        switch (_state)
+        {
+            case 0:
+                NormalRotate();
+                break;
+            case 1: //Фир
+                FeerRotate();
+                break;
+            case 2: //Хаотичность
+                RandomRotate();
+                break;
+            case 3: //Заморозка
+                StopMove();
+                break;
+        }
+
+        if(!_stoper)
+            _rbEnemy.transform.Translate(Vector3.forward * _forceMovement * Time.deltaTime);
+    }
+
+
+#region Spells
+    private void NormalRotate() 
+    {
         Vector3 difference = _targetMovement - transform.position;
         difference.Normalize();
         float rotation_y = Mathf.Atan2(difference.x, difference.z) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, rotation_y, 0f);
-
-        _rbEnemy.transform.Translate(Vector3.forward * _forceMovement * Time.deltaTime);
     }
+
+    private void FeerRotate()
+    {
+        Vector3 difference = _targetMovement - transform.position;
+        difference.Normalize();
+        float rotation_y = Mathf.Atan2(difference.x, difference.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, rotation_y + 180, 0f);
+        if (!_storRotate)
+        {
+            StartCoroutine(SpellTime(2f));
+            _storRotate = true;
+        }
+    }
+
+    private void RandomRotate()
+    {
+        Vector3 difference = _targetMovement - transform.position;
+        difference.Normalize();
+        if (!_storRotate)
+        {
+            transform.rotation = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
+            StartCoroutine(SpellTime(2f));
+            _storRotate = true;
+        }
+    }
+
+    private void StopMove()
+    {
+        if (!_storRotate)
+        {
+            StartCoroutine(SpellTime(2f));
+            _stoper = true;
+            _storRotate = true;
+        }
+    }
+#endregion
+
 
     public void Damage(int damage) //Урон с тача
     {
@@ -86,5 +164,18 @@ public class EnemyController : MonoBehaviour, IDamage
                 if(_noI._myLvl != _enemy.Length - 1 && _myLvl < _noI._myLvl)
                     Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator SpellTime(float timeSpell)
+    {
+        yield return new WaitForSeconds(timeSpell);
+        _state = 0;
+        _stoper = false;
+        _storRotate = false;
+    }
+
+    private void OnDestroy()
+    {
+        _spell._spellCust -= SetState;
     }
 }
