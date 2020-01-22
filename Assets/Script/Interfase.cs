@@ -1,11 +1,21 @@
 ﻿using UnityEngine;
 
-public interface IAttack 
+public interface ICanAttack 
 {
     void Attack(Vector3 point, int damage, int countAttack, float range);
 }
 
-public interface IDamage
+public interface ITakeDamage
 {
-    void Damage(int damage);
+    void TakeDamage(int damage);
+}
+
+public interface ICanUpSupper  //Supper это объект который вливает в себя другие объекты, в этом случае SupperCube
+{
+    void UpSupper();
+}
+
+public interface ITakeUpSupper 
+{
+    void TakeUpSupper(float up);
 }

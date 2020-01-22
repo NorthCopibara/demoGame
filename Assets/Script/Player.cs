@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour, IAttack
+public class Player : MonoBehaviour, ICanAttack
 {
     RaycastHit hit;
     Ray ray;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour, IAttack
 
     private void Update() //Ловим рейкасты
     {
-        #region Несколько тачей
+        #region Для андройд
         /*foreach (var r in Input.touches)
         {
             if (r.phase == TouchPhase.Began)
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour, IAttack
         {
             if (x.tag == "Enemy")
             {
-                x.transform.GetComponent<IDamage>().Damage(damage);
+                x.transform.GetComponent<ITakeDamage>().TakeDamage(damage);
 
                 i++; //Счетчик количества энеми под атакай за 1 каст
                 if(i >= countAttack)

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Patterns;
+﻿using Patterns;
 
 public class SetGame : Singleton<SetGame>
 {

@@ -4,7 +4,7 @@ public class SuperEnemy : MonoBehaviour
 {
     Rigidbody _rbSuperEnemy;
     [SerializeField] private float _forceUp;
-    [SerializeField] private ParticleSystem _partical;
+    //SerializeField] private ParticleSystem _partical;
     private void Start()
     {
         _rbSuperEnemy = GetComponent<Rigidbody>();
@@ -20,15 +20,14 @@ public class SuperEnemy : MonoBehaviour
 
         if (collision.transform.tag == "Enemy")
         {
-            float _damage = collision.gameObject.GetComponent<EnemyController>()._enemy[
-                            collision.gameObject.GetComponent<EnemyController>()._myLvl]._damade;
+            float _damage = collision.gameObject.GetComponent<EnemyController>().UpSupper;
 
             Destroy(collision.gameObject);
             transform.localScale = new Vector3(transform.localScale.x + _damage, transform.localScale.y + _damage, transform.localScale.y + _damage);
 
             if(transform.localScale.x >= 5)
             {
-                Time.timeScale = 0;
+                Time.timeScale = 0; //Покак просто замерзаем в случае проигрыша
             }
         }
     }
