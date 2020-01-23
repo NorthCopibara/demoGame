@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class EnemyController : EnemyCharacter, ITakeDamage
+public class EnemyController : MiniCube, ITakeDamage
 {
     #region Enemy Stats
     //public Enemy[]   _enemy;
@@ -126,7 +126,7 @@ public class EnemyController : EnemyCharacter, ITakeDamage
     }
 #endregion
 
-
+    /*
     public void TakeDamage(int damage) //Урон с тача
     {
         Health -= damage;
@@ -134,13 +134,13 @@ public class EnemyController : EnemyCharacter, ITakeDamage
             Destroy(gameObject);
         else
             EnemySetup(Health - 1);
-    }
-    
+    }*/
+    /*
     public void StopDefCollision(bool stop)
     {
         _stoper = stop;
     }
-
+    */
     private void OnCollisionEnter(Collision collision) //Подпрыгивание
     {
         if (collision.transform.tag == "Plane") //Прыжок

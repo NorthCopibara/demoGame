@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SuperEnemy : MonoBehaviour
+public class SuperCube : MonoBehaviour
 {
     Rigidbody _rbSuperEnemy;
     [SerializeField] private float _forceUp;
@@ -20,7 +20,7 @@ public class SuperEnemy : MonoBehaviour
 
         if (collision.transform.tag == "Enemy")
         {
-            float _damage = collision.gameObject.GetComponent<EnemyController>().UpSupper;
+            float _damage = collision.gameObject.GetComponent<MiniCube>().UpSupper;
 
             Destroy(collision.gameObject);
             transform.localScale = new Vector3(transform.localScale.x + _damage, transform.localScale.y + _damage, transform.localScale.y + _damage);

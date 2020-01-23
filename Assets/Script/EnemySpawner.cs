@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(_dTimeSpawn);
         GameObject enemy = Instantiate(_enemy_obj, _sapwn_position, Quaternion.identity, _enemy_parant);
 
-        enemy.GetComponent<EnemyController>().EnemySetup(_generateLvlEnemy.EnemyLvl());
+        enemy.GetComponent<MiniCube>().EnemySetup(_generateLvlEnemy.EnemyLvl());
 
         _stop_spawn = false;
     }

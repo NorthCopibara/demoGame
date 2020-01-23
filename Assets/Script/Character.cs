@@ -11,5 +11,5 @@ public abstract class Character: MonoBehaviour
     public abstract float ForceMove { get; set; }
     public abstract Material MaterialEnemy { get; set; }
 
-
+    protected abstract void Update();
 }
