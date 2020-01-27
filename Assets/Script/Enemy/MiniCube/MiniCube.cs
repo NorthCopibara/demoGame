@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class MiniCube : Character, ITakeDamage
 {
@@ -13,14 +14,18 @@ public class MiniCube : Character, ITakeDamage
 
     [SerializeField] private Enemy[] _stateEnemy;
 
+    SpellManager _spell;
+
     private MiniCubeBihaviour _bihaviour;
     private Rigidbody _rbEnemy;
     private bool _stoper; //Кастыль слияния противников (блрчит удаление второго противника при соприкосновении)
+    private bool _stopCorutine; //Костыль на остановку корутины
     private void Start()
     {
-        _bihaviour = new MiniCubeBihaviourAgressiv();
-       // _bihaviour = new MiniCubeBihaviourRandom();
-       //_bihaviour = new MiniCubeBihaviourFeer();
+        SetAgressivBehaviour();
+
+        _spell = FindObjectOfType<SpellManager>();
+        _spell._spellCust += SetBehaviour;
     }
 
     public void EnemySetup(int myLvl)
@@ -39,6 +44,46 @@ public class MiniCube : Character, ITakeDamage
 
         GetComponent<MeshRenderer>().material = MaterialEnemy;
         transform.localScale = new Vector3(Scale, Scale, Scale);
+    }
+
+    public void SetBehaviour(int behaviour)
+    {
+        switch (behaviour)
+        {
+            case 1:
+                SetFeerBehaviour();
+                break;
+            case 2:
+                SetRandomBehaviour();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void SetRandomBehaviour()
+    {
+        if (!_stopCorutine)
+        {
+            _bihaviour = new MiniCubeBihaviourRandom();
+            StartCoroutine(StopSpell());
+            _stopCorutine = true;
+        }
+    }
+
+    private void SetFeerBehaviour()
+    {
+        if (!_stopCorutine)
+        {
+            _bihaviour = new MiniCubeBihaviourFeer();
+            StartCoroutine(StopSpell());
+            _stopCorutine = true;
+        }
+    }
+
+    private void SetAgressivBehaviour()
+    {
+        _bihaviour = new MiniCubeBihaviourAgressiv();
     }
 
     public void TakeDamage(int damage) //Урон с тача
@@ -85,5 +130,17 @@ public class MiniCube : Character, ITakeDamage
                 if (_noI.Lvl != 10 - 1 && Lvl < _noI.Lvl)
                 Destroy(this.gameObject); //Друго уничтожается
         }
+    }
+
+    IEnumerator StopSpell()
+    {
+        yield return new WaitForSeconds(2f);
+        SetAgressivBehaviour();
+        _stopCorutine = false;
+    }
+
+    private void OnDestroy()
+    {
+        _spell._spellCust -= SetBehaviour;
     }
 }

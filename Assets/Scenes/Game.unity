@@ -439,7 +439,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _forceUp: 20000
-  _partical: {fileID: 0}
 --- !u!65 &404149759
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1645,7 +1644,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 11729fa27a679db4fbeedeff9e7512fe, type: 2}
+  - {fileID: 2100000, guid: f54712a715763754596306022447de29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

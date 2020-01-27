@@ -3,10 +3,9 @@
 public class MiniCubeBihaviourRandom : MiniCubeBihaviour
 {
     private bool _storRotate;
-
     public override void UpdateCube(GameObject obj)
     {
-        Vector3 difference = _targetMovement - obj.transform.position;
+        Vector3 difference = Vector3.zero - obj.transform.position;
         difference.Normalize();
         if (!_storRotate)
         {

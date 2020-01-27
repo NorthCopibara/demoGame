@@ -20,6 +20,6 @@ public class SetGame : Singleton<SetGame>
     public void SetGameLvl(Lvl lvl) 
     {
         _setLvl = lvl;
-        _spell = Spell.Randomness;
+        _spell = Spell.Feer;
     }
 }
