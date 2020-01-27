@@ -66,6 +66,7 @@ public class MiniCube : Character, ITakeDamage
         if (!_stopCorutine)
         {
             _bihaviour = new MiniCubeBihaviourRandom();
+            _bihaviour.StartCube(this.gameObject);
             StartCoroutine(StopSpell());
             _stopCorutine = true;
         }
@@ -76,6 +77,7 @@ public class MiniCube : Character, ITakeDamage
         if (!_stopCorutine)
         {
             _bihaviour = new MiniCubeBihaviourFeer();
+            _bihaviour.StartCube(this.gameObject);
             StartCoroutine(StopSpell());
             _stopCorutine = true;
         }
@@ -84,6 +86,7 @@ public class MiniCube : Character, ITakeDamage
     private void SetAgressivBehaviour()
     {
         _bihaviour = new MiniCubeBihaviourAgressiv();
+        _bihaviour.StartCube(this.gameObject);
     }
 
     public void TakeDamage(int damage) //Урон с тача
@@ -102,7 +105,7 @@ public class MiniCube : Character, ITakeDamage
 
     protected override void Update() 
     {
-        _bihaviour.UpdateCube(this.gameObject);
+        _bihaviour.UpdateCube();
 
         if (!_stoper)
             _rbEnemy.transform.Translate(Vector3.forward * ForceMove * Time.deltaTime);

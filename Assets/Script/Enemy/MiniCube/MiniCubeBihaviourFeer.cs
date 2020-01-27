@@ -2,7 +2,14 @@
 
 public class MiniCubeBihaviourFeer : MiniCubeBihaviour
 {
-    public override void UpdateCube(GameObject obj)
+    GameObject obj;
+    Rigidbody _rb;
+    public override void StartCube(GameObject _obj)
+    {
+        obj = _obj;
+        _rb = obj.GetComponent<Rigidbody>();
+    }
+    public override void UpdateCube()
     {
         Vector3 difference = Vector3.zero - obj.transform.position;
         difference.Normalize();
