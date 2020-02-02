@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MiniCube : Character, ITakeDamage
+public class MiniCubeTest : Character, ITakeDamage, IPoolible
 {
     public override int Armor { get; set; }
     public override int Health { get; set; }
@@ -17,15 +17,12 @@ public class MiniCube : Character, ITakeDamage
     SpellManager _spell;
 
     private MiniCubeBihaviour _bihaviour;
-    private Rigidbody _rbEnemy;
-    private bool _stoper; //Кастыль слияния противников (блрчит удаление второго противника при соприкосновении)
     private bool _stopCorutine; //Костыль на остановку корутины
     private void Start()
     {
         SetAgressivBehaviour();
 
-        _spell = FindObjectOfType<SpellManager>();
-        _spell._spellCust += SetBehaviour;
+        EnemySetup(0);
     }
 
     public void EnemySetup(int myLvl)
@@ -39,8 +36,6 @@ public class MiniCube : Character, ITakeDamage
         MaterialEnemy = _stateEnemy[myLvl]._skin;
         Lvl = myLvl;
         #endregion
-
-        _rbEnemy = GetComponent<Rigidbody>();
 
         GetComponent<MeshRenderer>().material = MaterialEnemy;
         transform.localScale = new Vector3(Scale, Scale, Scale);
@@ -98,41 +93,9 @@ public class MiniCube : Character, ITakeDamage
             EnemySetup(Health - 1);
     }
 
-    public void StopDefCollision(bool stop)
-    {
-        _stoper = stop;
-    }
-
     protected override void Update() 
     {
-        _bihaviour.UpdateCube();
-
-        if (!_stoper)
-            _rbEnemy.transform.Translate(Vector3.forward * ForceMove * Time.deltaTime);
-    }
-
-    private void OnCollisionEnter(Collision collision) //Подпрыгивание
-    {
-        if (collision.transform.tag == "Plane") //Прыжок
-        {
-            //_partical.Play();
-            _rbEnemy.AddForce(Vector3.up * ForceUp * Time.deltaTime, ForceMode.Force);
-        }
-
-        if (collision.transform.tag == "Enemy") //Коллизия с другим проивником
-        {
-            MiniCube _noI = collision.gameObject.GetComponent<MiniCube>();
-
-            if (Lvl < 10 - 1 && Lvl > _noI.Lvl)
-            {
-                _noI.StopDefCollision(true); //Один из enemy повышает свой уровень
-                Lvl++;
-                EnemySetup(Lvl);
-            }
-            else
-                if (_noI.Lvl != 10 - 1 && Lvl < _noI.Lvl)
-                Destroy(this.gameObject); //Друго уничтожается
-        }
+        
     }
 
     IEnumerator StopSpell()
@@ -142,8 +105,12 @@ public class MiniCube : Character, ITakeDamage
         _stopCorutine = false;
     }
 
-    private void OnDestroy()
+    public void OnSpawn()
     {
-        _spell._spellCust -= SetBehaviour;
+
+    }
+    public void OnDespawn()
+    {
+
     }
 }
