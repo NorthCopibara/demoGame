@@ -11,15 +11,6 @@ public class Pool
     private Dictionary<int, Stack<GameObject>> cachedObj = new Dictionary<int, Stack<GameObject>>();
     private Dictionary<int, int> cachedIds = new Dictionary<int, int>();
 
-   /* public Pool PopulateWith(GameObject prefab, int amount, int amountPerTick, int tickSize = 1)//метод предзагрузки
-    {
-        int key = prefab.GetInstanceID(); //Добавление в словарь объектов
-        Stack<GameObject> stack = new Stack<GameObject>();
-        cachedObj.Add(key, stack);
-
-        Observable.???
-    }*/
-
     public void SetParant(Transform parant)
     {
         _parentPool = parant;
@@ -27,7 +18,7 @@ public class Pool
 
     /*
      * Суть идеи:
-     * Мы смотрим на айли префаба и по его подобию создаем объекты на сцене, но у них другие id
+     * Мы смотрим на айди префаба и по его подобию создаем объекты на сцене, но у них другие id
      * Поэтому мы берем и создаем словарь с ключем в виде id префаба и значением id созданного объекта, что позволяет различать объекты по их принадлежности
     */
     public GameObject Spawn(GameObject prefab, Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion), Transform parant = null) //Метод спавна объектов
@@ -84,4 +75,6 @@ public class Pool
 
         return go.gameObject;
     }
+
+
 }

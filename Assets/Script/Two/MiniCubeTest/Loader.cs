@@ -11,7 +11,7 @@ public class Loader : MonoBehaviour
 
     private void Awake()
     {
-        ManagerPool.Instance.AddPool(PoolType.MiniCube);
+        //ManagerPool.AddPool(PoolType.MiniCube).;
     }
 
     private void Update()
@@ -20,7 +20,7 @@ public class Loader : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                obj.Add(ManagerPool.Instance.Spawn(PoolType.MiniCube, prefab));
+                obj.Add(ManagerPool.Spawn(PoolType.MiniCube, prefab));
             }
         }
 
@@ -28,7 +28,7 @@ public class Loader : MonoBehaviour
         {
             for (int i = 0; i < obj.Count; i++)
             {
-                ManagerPool.Instance.DeSpawn(PoolType.MiniCube, obj[i]);
+                ManagerPool.DeSpawn(PoolType.MiniCube, obj[i]);
             }
         }
     }
